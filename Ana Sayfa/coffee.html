@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FK Base - Bana Kahve Al</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --accent: #1DB954;
+            --accent-rgb: 29,185,84;
+            --accent-dim: rgba(29,185,84,0.15);
+            --accent-glow: rgba(29,185,84,0.35);
+            --bg: #0e1310;
+            --card-bg: #18201b;
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.45);
+            --text-subtle: rgba(255,255,255,0.65);
+            --border: rgba(255,255,255,0.08);
+            --hover: rgba(255,255,255,0.06);
+            --btn-ghost-border: rgba(255,255,255,0.18);
+            --tag-bg: rgba(255,255,255,0.06);
+        }
+        [data-theme="light"] {
+            --bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --text: #0e1310;
+            --text-muted: rgba(0,0,0,0.45);
+            --text-subtle: rgba(0,0,0,0.65);
+            --border: rgba(0,0,0,0.1);
+            --hover: rgba(0,0,0,0.05);
+            --btn-ghost-border: rgba(0,0,0,0.18);
+            --tag-bg: rgba(0,0,0,0.05);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(14,19,16,0.85);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--text);
+        }
+        .nav-logo img {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+        }
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .color-dots {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            background: var(--tag-bg);
+            border-radius: 50px;
+            border: 1px solid var(--border);
+        }
+        .color-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .color-dot:hover { transform: scale(1.2); }
+        .color-dot.active {
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.4);
+            transform: scale(1.1);
+        }
+        .theme-toggle {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-subtle);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            color: var(--text);
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            transform: rotate(15deg);
+        }
+        .lang-toggle {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            border: 1px solid var(--btn-ghost-border);
+            background: var(--hover);
+            color: var(--text-subtle);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .lang-toggle:hover {
+            color: var(--text);
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 24px 80px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .header-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            color: #fff;
+            box-shadow: 0 0 30px rgba(29,185,84,0.4);
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .sub {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        .reason-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .reason-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+        .reason-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+        .reason-desc {
+            color: var(--text-subtle);
+            line-height: 1.6;
+            padding-left: 34px;
+        }
+        .coffee-btn {
+            display: block;
+            width: fit-content;
+            margin: 40px auto 20px;
+            background: var(--accent);
+            color: #fff;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(29,185,84,0.3);
+        }
+        .coffee-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(29,185,84,0.5);
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .back-link a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .back-link a:hover {
+            color: var(--accent);
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        @media (max-width: 640px) {
+            .container { padding: 80px 20px 60px; }
+            h1 { font-size: 1.8rem; }
+            .reason-desc { padding-left: 0; }
+            .color-dots { gap: 4px; padding: 3px 6px; }
+            .color-dot { width: 14px; height: 14px; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="main.html" class="nav-logo">
+            <img src="assets/images/logo.png" alt="FK Base">
+            <span>FK&nbsp;<em style="color:var(--accent);font-style:normal;">Base</em></span>
+        </a>
+        <div class="nav-controls">
+            <div class="color-dots">
+                <button class="color-dot active" data-color="#1DB954" data-rgb="29,185,84" style="background:#1DB954" title="Yeşil"></button>
+                <button class="color-dot" data-color="#7b2cbf" data-rgb="123,44,191" style="background:#7b2cbf" title="Mor"></button>
+                <button class="color-dot" data-color="#3b82f6" data-rgb="59,130,246" style="background:#3b82f6" title="Mavi"></button>
+                <button class="color-dot" data-color="#ef4444" data-rgb="239,68,68" style="background:#ef4444" title="Kırmızı"></button>
+                <button class="color-dot" data-color="#f59e0b" data-rgb="245,158,11" style="background:#f59e0b" title="Altın"></button>
+            </div>
+            <button class="theme-toggle" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+            <button class="lang-toggle" id="langToggle">EN</button>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="header">
+        <div class="header-icon">
+            <i class="fa-solid fa-mug-hot"></i>
+        </div>
+        <h1 id="coffeeTitle">Bana Neden Kahve Almalısın? ☕</h1>
+        <p id="coffeeSub" class="sub">Çünkü bu uygulamalar senin için, tamamen ücretsiz ve reklamsız!</p>
+    </div>
+
+    <div class="reason-card">
+        <div class="reason-title" id="card1_title">
+            <i class="fa-solid fa-heart"></i>
+            <span>Tamamen Ücretsiz</span>
+        </div>
+        <div class="reason-desc" id="card1_desc">
+            FK Base'deki tüm araçlar, FK Music dahil, <strong>tamamen ücretsizdir</strong>. Hiçbir ödeme duvarı yok, hiçbir premium özellik yok. Her şey herkese açık.
+        </div>
+    </div>
+
+    <div class="reason-card">
+        <div class="reason-title" id="card2_title">
+            <i class="fa-solid fa-ban"></i>
+            <span>Reklam Yok</span>
+        </div>
+        <div class="reason-desc" id="card2_desc">
+            Hiçbir yerde rahatsız edici reklamlar yok. Sadece sen ve müziğin. Reklam izlemek zorunda değilsin, çünkü ben de onlardan nefret ediyorum.
+        </div>
+    </div>
+
+    <div class="reason-card">
+        <div class="reason-title" id="card3_title">
+            <i class="fa-solid fa-clock"></i>
+            <span>25 Günlük Emek</span>
+        </div>
+        <div class="reason-desc" id="card3_desc">
+            FK Music, 25 günde sıfırdan yazıldı. Her bir özellik, her bir buton, her bir animasyon saatlerce uğraşılarak yapıldı. Arkada çok fazla emek var.
+        </div>
+    </div>
+
+    <div class="reason-card">
+        <div class="reason-title" id="card4_title">
+            <i class="fa-solid fa-microchip"></i>
+            <span>14 Yaşında Bir Geliştirici</span>
+        </div>
+        <div class="reason-desc" id="card4_desc">
+            Ben Furkan, 14 yaşında bir yazılım geliştiricisiyim. Okulum, ödevlerim ve sosyal hayatım arasında bu projeleri geliştiriyorum. Küçük bir kahve desteği benim için çok büyük bir motivasyon.
+        </div>
+    </div>
+
+    <div class="reason-card">
+        <div class="reason-title" id="card5_title">
+            <i class="fa-solid fa-wifi"></i>
+            <span>İnternetsiz Çalışır</span>
+        </div>
+        <div class="reason-desc" id="card5_desc">
+            FK Music tamamen internetsiz çalışır. Müziklerin tarayıcında saklanır, yedeklenir ve istediğin zaman geri yüklenir. Verilerin sadece sende kalır.
+        </div>
+    </div>
+
+    <div class="reason-card">
+        <div class="reason-title" id="card6_title">
+            <i class="fa-solid fa-code"></i>
+            <span>Açık ve Şeffaf</span>
+        </div>
+        <div class="reason-desc" id="card6_desc">
+            Tüm kodlar temiz, anlaşılır ve geliştirilmeye açık. Kötü niyetli hiçbir şey yok. İstersen kodları inceleyebilir, hatta katkıda bulunabilirsin.
+        </div>
+    </div>
+
+    <a href="https://www.buymeacoffee.com/fkbase" target="_blank" class="coffee-btn" id="coffeeBtn">
+        <i class="fa-solid fa-mug-hot"></i> Bana Kahve Ismarla ☕
+    </a>
+
+    <div class="back-link">
+        <a href="main.html" id="backLink">← Ana Sayfaya Dön</a>
+    </div>
+</div>
+
+<footer>
+    <p id="footerText">FK Base &copy; 2025 | Furkan tarafından ❤️ ile yapıldı</p>
+</footer>
+
+<script>
+    // Dil çevirileri
+    const translations = {
+        tr: {
+            title: 'Bana Neden Kahve Almalısın? ☕',
+            subtitle: 'Çünkü bu uygulamalar senin için, tamamen ücretsiz ve reklamsız!',
+            card1_title: 'Tamamen Ücretsiz',
+            card1_desc: 'FK Base\'deki tüm araçlar, FK Music dahil, <strong>tamamen ücretsizdir</strong>. Hiçbir ödeme duvarı yok, hiçbir premium özellik yok. Her şey herkese açık.',
+            card2_title: 'Reklam Yok',
+            card2_desc: 'Hiçbir yerde rahatsız edici reklamlar yok. Sadece sen ve müziğin. Reklam izlemek zorunda değilsin, çünkü ben de onlardan nefret ediyorum.',
+            card3_title: '25 Günlük Emek',
+            card3_desc: 'FK Music, 25 günde sıfırdan yazıldı. Her bir özellik, her bir buton, her bir animasyon saatlerce uğraşılarak yapıldı. Arkada çok fazla emek var.',
+            card4_title: '14 Yaşında Bir Geliştirici',
+            card4_desc: 'Ben Furkan, 14 yaşında bir yazılım geliştiricisiyim. Okulum, ödevlerim ve sosyal hayatım arasında bu projeleri geliştiriyorum. Küçük bir kahve desteği benim için çok büyük bir motivasyon.',
+            card5_title: 'İnternetsiz Çalışır',
+            card5_desc: 'FK Music tamamen internetsiz çalışır. Müziklerin tarayıcında saklanır, yedeklenir ve istediğin zaman geri yüklenir. Verilerin sadece sende kalır.',
+            card6_title: 'Açık ve Şeffaf',
+            card6_desc: 'Tüm kodlar temiz, anlaşılır ve geliştirilmeye açık. Kötü niyetli hiçbir şey yok. İstersen kodları inceleyebilir, hatta katkıda bulunabilirsin.',
+            btn_text: 'Bana Kahve Ismarla ☕',
+            back_link: '← Ana Sayfaya Dön',
+            footer_text: 'FK Base &copy; 2025 | Furkan tarafından ❤️ ile yapıldı'
+        },
+        en: {
+            title: 'Why Should You Buy Me a Coffee? ☕',
+            subtitle: 'Because these apps are for you, completely free and ad-free!',
+            card1_title: 'Completely Free',
+            card1_desc: 'All tools in FK Base, including FK Music, are <strong>completely free</strong>. No paywalls, no premium features. Everything is open to everyone.',
+            card2_title: 'No Ads',
+            card2_desc: 'No annoying ads anywhere. Just you and your music. You don\'t have to watch ads because I hate them too.',
+            card3_title: '25 Days of Effort',
+            card3_desc: 'FK Music was written from scratch in 25 days. Every feature, every button, every animation was made with hours of effort. There\'s a lot of work behind it.',
+            card4_title: 'A 14-Year-Old Developer',
+            card4_desc: 'I\'m Furkan, a 14-year-old software developer. I develop these projects between school, homework and social life. A small coffee support is a huge motivation for me.',
+            card5_title: 'Works Offline',
+            card5_desc: 'FK Music works completely offline. Your music is stored in your browser, backed up and restored whenever you want. Your data stays with you.',
+            card6_title: 'Open & Transparent',
+            card6_desc: 'All code is clean, understandable and open to development. Nothing malicious. You can inspect the code or even contribute.',
+            btn_text: 'Buy Me a Coffee ☕',
+            back_link: '← Back to Home',
+            footer_text: 'FK Base &copy; 2025 | Made by Furkan with ❤️'
+        }
+    };
+
+    // Renk haritası
+    const COLORS = {
+        '#1DB954': '29,185,84',
+        '#7b2cbf': '123,44,191',
+        '#3b82f6': '59,130,246',
+        '#ef4444': '239,68,68',
+        '#f59e0b': '245,158,11'
+    };
+
+    // Tema renklerini uygula
+    function applyAccent(hex, rgb) {
+        document.documentElement.style.setProperty('--accent', hex);
+        document.documentElement.style.setProperty('--accent-rgb', rgb);
+        document.documentElement.style.setProperty('--accent-dim', 'rgba(' + rgb + ',0.12)');
+        document.documentElement.style.setProperty('--accent-glow', 'rgba(' + rgb + ',0.32)');
+        document.querySelectorAll('.color-dot').forEach(dot => {
+            dot.classList.toggle('active', dot.dataset.color === hex);
+        });
+    }
+
+    // Dili uygula
+    function applyLanguage(lang) {
+        localStorage.setItem('fkbase-lang', lang);
+        const t = translations[lang];
+        if (!t) return;
+
+        document.getElementById('coffeeTitle').textContent = t.title;
+        document.getElementById('coffeeSub').textContent = t.subtitle;
+        document.getElementById('card1_title').innerHTML = '<i class="fa-solid fa-heart"></i> <span>' + t.card1_title + '</span>';
+        document.getElementById('card1_desc').innerHTML = t.card1_desc;
+        document.getElementById('card2_title').innerHTML = '<i class="fa-solid fa-ban"></i> <span>' + t.card2_title + '</span>';
+        document.getElementById('card2_desc').innerHTML = t.card2_desc;
+        document.getElementById('card3_title').innerHTML = '<i class="fa-solid fa-clock"></i> <span>' + t.card3_title + '</span>';
+        document.getElementById('card3_desc').innerHTML = t.card3_desc;
+        document.getElementById('card4_title').innerHTML = '<i class="fa-solid fa-microchip"></i> <span>' + t.card4_title + '</span>';
+        document.getElementById('card4_desc').innerHTML = t.card4_desc;
+        document.getElementById('card5_title').innerHTML = '<i class="fa-solid fa-wifi"></i> <span>' + t.card5_title + '</span>';
+        document.getElementById('card5_desc').innerHTML = t.card5_desc;
+        document.getElementById('card6_title').innerHTML = '<i class="fa-solid fa-code"></i> <span>' + t.card6_title + '</span>';
+        document.getElementById('card6_desc').innerHTML = t.card6_desc;
+        document.getElementById('coffeeBtn').innerHTML = '<i class="fa-solid fa-mug-hot"></i> ' + t.btn_text;
+        document.getElementById('backLink').innerHTML = t.back_link;
+        document.getElementById('footerText').innerHTML = t.footer_text;
+
+        const langToggle = document.getElementById('langToggle');
+        if (langToggle) langToggle.textContent = lang === 'tr' ? 'EN' : 'TR';
+    }
+
+    // Tema (koyu/açık) uygula
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('fkbase-theme', theme);
+        const themeIcon = document.querySelector('#themeToggle i');
+        if (themeIcon) {
+            themeIcon.className = theme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+        }
+    }
+
+    // Sayfa yüklendiğinde
+    document.addEventListener('DOMContentLoaded', () => {
+        // Dil yükle
+        const savedLang = localStorage.getItem('fkbase-lang') || 'tr';
+        applyLanguage(savedLang);
+
+        // Tema yükle
+        const savedTheme = localStorage.getItem('fkbase-theme') || 'dark';
+        applyTheme(savedTheme);
+
+        // Vurgu rengi yükle
+        const savedAccent = localStorage.getItem('fkbase-accent') || '#1DB954';
+        const rgb = COLORS[savedAccent] || '29,185,84';
+        applyAccent(savedAccent, rgb);
+    });
+
+    // Tema butonu
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+        });
+    }
+
+    // Dil butonu
+    const langToggle = document.getElementById('langToggle');
+    if (langToggle) {
+        langToggle.addEventListener('click', () => {
+            const current = localStorage.getItem('fkbase-lang') || 'tr';
+            const next = current === 'tr' ? 'en' : 'tr';
+            applyLanguage(next);
+        });
+    }
+
+    // Renk seçiciler
+    document.querySelectorAll('.color-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+            const hex = dot.dataset.color;
+            const rgb = dot.dataset.rgb;
+            applyAccent(hex, rgb);
+            localStorage.setItem('fkbase-accent', hex);
+        });
+    });
+</script>
+
+</body>
+</html>
