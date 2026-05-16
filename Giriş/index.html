@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FK Base</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- JS (theme önce) -->
+    <script src="js/theme.js"></script>
+    <script src="js/audio.js" defer></script>
+    <script src="js/language.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/eyes.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+
+    <!-- BACKGROUND CHARACTER -->
+    <div class="bg-character" aria-hidden="true">
+        <img src="assets/images/karakter.png" alt="">
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" role="banner">
+        <a class="navbar__logo" href="#" tabindex="-1" aria-label="FK Base home">
+            <span class="navbar__logo-dots" aria-hidden="true">
+                <span class="navbar__logo-dot"></span>
+                <span class="navbar__logo-dot"></span>
+                <span class="navbar__logo-dot"></span>
+            </span>
+            <span class="navbar__logo-text">FK&nbsp;<span>Base</span></span>
+        </a>
+
+        <div class="navbar__right">
+            <span class="navbar__badge">v1.0</span>
+
+            <button class="theme-toggle" title="Tema değiştir" aria-label="Toggle theme">
+                <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- PAGE WRAPPER -->
+    <main class="page-wrapper" role="main">
+        <div class="entry-card">
+
+            <!-- STEP 0 -->
+            <div id="step0">
+                <div class="entry-logo">
+                    <img src="assets/images/logo.png" alt="FK Base Logo" class="entry-logo__img">
+                </div>
+                <h1 class="welcome-text">
+                    <span id="welcomeLabel">FK Base'e Hoş Geldin</span>
+                </h1>
+                <p class="welcome-sub" id="welcomeSub">Dilini seç ve devam et.</p>
+
+                <div class="lang-buttons" role="group">
+                    <button class="lang-btn active" data-lang="tr" type="button">Türkçe</button>
+                    <button class="lang-btn" data-lang="en" type="button">English</button>
+                </div>
+
+                <button class="next-btn" type="button">
+                    <span>Devam Et</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- STEP 1 -->
+            <div id="step1">
+                <div class="name-section">
+                    <label class="name-label" for="nameInput" id="nameLabel">İsim</label>
+                    <input class="name-input" id="nameInput" type="text"
+                           placeholder="Adını gir…" autocomplete="name"
+                           spellcheck="false" maxlength="40">
+                </div>
+
+                <button class="next-btn" type="button">
+                    <span>Devam Et</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </button>
+
+                <div class="divider">
+                    <span id="dividerText">ya da</span>
+                </div>
+
+                <div class="auth-section">
+                    <button class="auth-btn" id="signInBtn" type="button">Giriş Yap</button>
+                    <button class="auth-btn" id="signUpBtn" type="button">Kayıt Ol</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" role="contentinfo">
+        <p class="footer__text">Made by <span>Furkan</span></p>
+    </footer>
+
+    <!-- MODALS -->
+    <div class="modal-overlay" id="modalSignInOverlay" role="dialog" aria-modal="true">
+        <div class="modal">
+            <button class="modal__close" id="modalSignInClose" aria-label="Kapat">&times;</button>
+            <h2 class="modal__title" id="modalSignInTitle">Giriş Yap</h2>
+            <div class="modal__field">
+                <label class="modal__label" for="siEmail" id="siEmailLabel">E-posta</label>
+                <input class="modal__input" id="siEmail" type="email" placeholder="ornek@email.com">
+            </div>
+            <div class="modal__field">
+                <label class="modal__label" for="siPass" id="siPassLabel">Şifre</label>
+                <input class="modal__input" id="siPass" type="password" placeholder="••••••••">
+            </div>
+            <p class="modal__error" id="siError"></p>
+            <button class="modal__submit" id="siSubmit" type="button">Giriş</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalSignUpOverlay" role="dialog" aria-modal="true">
+        <div class="modal">
+            <button class="modal__close" id="modalSignUpClose" aria-label="Kapat">&times;</button>
+            <h2 class="modal__title" id="modalSignUpTitle">Kayıt Ol</h2>
+            <div class="modal__field">
+                <label class="modal__label" for="suName" id="suNameLabel">İsim</label>
+                <input class="modal__input" id="suName" type="text" placeholder="Adın Soyadın">
+            </div>
+            <div class="modal__field">
+                <label class="modal__label" for="suEmail" id="suEmailLabel">E-posta</label>
+                <input class="modal__input" id="suEmail" type="email" placeholder="ornek@email.com">
+            </div>
+            <div class="modal__field">
+                <label class="modal__label" for="suPass" id="suPassLabel">Şifre</label>
+                <input class="modal__input" id="suPass" type="password" placeholder="En az 6 karakter">
+            </div>
+            <p class="modal__error" id="suError"></p>
+            <button class="modal__submit" id="suSubmit" type="button">Kayıt Ol</button>
+        </div>
+    </div>
+
+</body>
+</html>
